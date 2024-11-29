@@ -10,6 +10,7 @@ public class MainApp {
     private static List<String> subjects = new ArrayList<>();
     private static List<String> examResults = new ArrayList<>();
     private static List<String> groups = new ArrayList<>();
+    private  static List<String> dean = new ArrayList<>();
 
     public static void main(String[] args) {
         loadData();
@@ -110,6 +111,7 @@ public class MainApp {
 
                 JButton addStudentButton = new JButton("Добавить студента");
                 JButton addTeacherButton = new JButton("Добавить преподавателя");
+                JButton addDeanButton = new JButton("Добавить Заместителя директора");
                 JButton addSubjectButton = new JButton("Добавить дисциплину");
                 JButton deleteUserButton = new JButton("Удалить пользователя");
 
@@ -117,6 +119,7 @@ public class MainApp {
                 panel.add(assignStudentToGroupButton);
                 panel.add(addStudentButton);
                 panel.add(addTeacherButton);
+                panel.add(addDeanButton);
                 panel.add(addSubjectButton);
                 panel.add(deleteUserButton);
                 panel.add(logoutButton);
@@ -125,18 +128,33 @@ public class MainApp {
                 assignStudentToGroupButton.addActionListener(e -> assignStudentToGroup());
 
                 addStudentButton.addActionListener(e -> {
-                    String student = JOptionPane.showInputDialog("Введите имя студента:");
-                    if (student != null) {
-                        students.add(student);
+                    String studentName = JOptionPane.showInputDialog("Введите имя студента:");
+                    String studentPassword = JOptionPane.showInputDialog("Введите пароль студента:");
+                    if (studentName != null && studentPassword != null) {
+                        students.add(studentName);
+                        UserManager.addUser(new User(studentName, studentPassword, "Студент"));
                         JOptionPane.showMessageDialog(frame, "Студент добавлен!");
+                        saveData();
+                    }
+                });
+
+                addDeanButton.addActionListener(e -> {
+                    String deanName = JOptionPane.showInputDialog("Введите имя Заместителя директора:");
+                    String deanPassword = JOptionPane.showInputDialog("Введите пароль Заместителя директора:");
+                    if (deanName != null && deanPassword != null) {
+                        dean.add(deanName);
+                        UserManager.addUser(new User(deanName, deanPassword, "Заместитель директора"));
+                        JOptionPane.showMessageDialog(frame, "Заместитель директора добавлен!");
                         saveData();
                     }
                 });
 
                 addTeacherButton.addActionListener(e -> {
                     String teacher = JOptionPane.showInputDialog("Введите имя преподавателя:");
-                    if (teacher != null) {
+                    String teacherPassword = JOptionPane.showInputDialog("Введите пароль преподавателя:");
+                    if (teacher != null && teacherPassword != null) {
                         teachers.add(teacher);
+                        UserManager.addUser(new User(teacher, teacherPassword, "Преподаватель"));
                         JOptionPane.showMessageDialog(frame, "Преподаватель добавлен!");
                         saveData();
                     }
