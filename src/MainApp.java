@@ -19,6 +19,7 @@ public class MainApp {
             JFrame frame = new JFrame("Сессия");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(400, 300);
+            frame.setLocation(600,300);
 
             frame.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
@@ -85,8 +86,9 @@ public class MainApp {
 
     private static void openRoleInterface(User user) {
         JFrame frame = new JFrame("Интерфейс " + user.getRole());
+        frame.setLocation(600,300);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(600, 400);
+        frame.setSize(400, 300);
 
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
