@@ -1,3 +1,4 @@
+import javax.security.auth.Subject;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -19,7 +20,7 @@ public class MainApp {
             JFrame frame = new JFrame("Сессия");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(400, 300);
-            frame.setLocation(600,300);
+            frame.setLocation(600,250);
 
             frame.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
@@ -86,9 +87,9 @@ public class MainApp {
 
     private static void openRoleInterface(User user) {
         JFrame frame = new JFrame("Интерфейс " + user.getRole());
-        frame.setLocation(600,300);
+        frame.setLocation(600,250);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(400, 300);
+        frame.setSize(600, 300);
 
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -131,6 +132,12 @@ public class MainApp {
                 addSubjectButton.setSize(250,30);
 
                 JButton deleteUserButton = new JButton("Удалить пользователя");
+                deleteUserButton.setLayout(null);
+                deleteUserButton.setSize(250,30);
+
+                JButton deleteSubjectButton = new JButton("Удалить предмет");
+                deleteSubjectButton.setLayout(null);
+                deleteSubjectButton.setSize(250,30);
 
                 panel.setLayout(null);
                 panel.add(addGroupButton).setLocation(10,20);
@@ -139,8 +146,10 @@ public class MainApp {
                 panel.add(addTeacherButton).setLocation(10,100);
                 panel.add(addDeanButton).setLocation(10,140);
                 panel.add(addSubjectButton).setLocation(10,180);
-                panel.add(deleteUserButton);
+                panel.add(deleteUserButton).setLocation(300,60);
+                panel.add(deleteSubjectButton).setLocation(300,100);
                 panel.add(logoutButton);
+
 
                 addGroupButton.addActionListener(e -> addGroup());
                 assignStudentToGroupButton.addActionListener(e -> assignStudentToGroup());
