@@ -109,20 +109,36 @@ public class MainApp {
         switch (user.getRole()) {
             case "Администратор":
                 JButton addGroupButton = new JButton("Добавить группу");
+                addGroupButton.setLayout(null);
+                addGroupButton.setSize(250,30);
+
                 JButton assignStudentToGroupButton = new JButton("Распределить студента по группе");
 
                 JButton addStudentButton = new JButton("Добавить студента");
+                addStudentButton.setLayout(null);
+                addStudentButton.setSize(250,30);
+
                 JButton addTeacherButton = new JButton("Добавить преподавателя");
+                addTeacherButton.setLayout(null);
+                addTeacherButton.setSize(250,30);
+
                 JButton addDeanButton = new JButton("Добавить Заместителя директора");
+                addDeanButton.setLayout(null);
+                addDeanButton.setSize(250,30);
+
                 JButton addSubjectButton = new JButton("Добавить дисциплину");
+                addSubjectButton.setLayout(null);
+                addSubjectButton.setSize(250,30);
+
                 JButton deleteUserButton = new JButton("Удалить пользователя");
 
-                panel.add(addGroupButton);
+                panel.setLayout(null);
+                panel.add(addGroupButton).setLocation(10,20);
                 panel.add(assignStudentToGroupButton);
-                panel.add(addStudentButton);
-                panel.add(addTeacherButton);
-                panel.add(addDeanButton);
-                panel.add(addSubjectButton);
+                panel.add(addStudentButton).setLocation(10,60);
+                panel.add(addTeacherButton).setLocation(10,100);
+                panel.add(addDeanButton).setLocation(10,140);
+                panel.add(addSubjectButton).setLocation(10,180);
                 panel.add(deleteUserButton);
                 panel.add(logoutButton);
 
