@@ -8,6 +8,7 @@ class SubjectManager{
     private static final String FILE_NAME = "subjects.txt";
 
     public static List<Subject> loadSubject() {
+
         List<Subject> subjects = new ArrayList<>();
         File file = new File(FILE_NAME);
 
@@ -18,10 +19,10 @@ class SubjectManager{
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-
                 subjects.add(new Subject());
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
         return subjects;
@@ -32,7 +33,6 @@ class SubjectManager{
         subjects.add(subject);
         saveSubject(subjects);
     }
-
 
     public static void saveSubject(List<Subject> subjects) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_NAME))) {

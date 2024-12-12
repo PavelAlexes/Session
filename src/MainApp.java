@@ -1,9 +1,11 @@
-import javax.security.auth.Subject;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainApp {
     private static List<String> students = new ArrayList<>();
@@ -12,9 +14,25 @@ public class MainApp {
     private static List<String> examResults = new ArrayList<>();
     private static List<String> groups = new ArrayList<>();
     private  static List<String> dean = new ArrayList<>();
+    private static final String FILE_studentToExam = "studentToExam.txt";
+    private static final String FILE_studentGrades = "studentToGrades.txt";
+    private static final String FILE_studentFullGrades = "studentFullGrades.txt";
+    private static List<File> arrFileStudentToExam = new ArrayList<>();
+    private static List<String> arrStringStudentToExam = new ArrayList<>();
+    private static List<File> arrFileStudentGrades = new ArrayList<>();
+    private static List<String> arrStringStudentGrades = new ArrayList<>();
+    private static List<FullStudentGrades> arrFullStudentGrades = new ArrayList<>();
+    private static List<File> arrFullFileStringStudentGrades = new ArrayList<>();
+    private static List<String> arrFullStringStudentGrades = new ArrayList<>();
+    private static boolean deenGetResult = false;
 
     public static void main(String[] args) {
+
         loadData();
+
+        arrFileStudentToExam.add(new File(FILE_studentToExam));
+        arrFileStudentGrades.add(new File(FILE_studentGrades));
+        arrFullFileStringStudentGrades.add(new File(FILE_studentFullGrades));
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Сессия");
@@ -78,7 +96,17 @@ public class MainApp {
                 );
 
                 if (username != null && password != null && role != null) {
+
                     UserManager.addUser(new User(username, password, role));
+
+                    switch (role){
+                        case "Студент":
+                            students.add(username);
+                            saveData();
+                            break;
+                        case "Преподаватель":
+                            break;
+                    }
                     JOptionPane.showMessageDialog(frame, "Пользователь успешно зарегистрирован!");
                 }
             });
@@ -86,7 +114,9 @@ public class MainApp {
     }
 
     private static void openRoleInterface(User user) {
+
         JFrame frame = new JFrame("Интерфейс " + user.getRole());
+
         frame.setLocation(600,250);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(600, 300);
@@ -110,16 +140,32 @@ public class MainApp {
         });
 
         switch (user.getRole()) {
+
             case "Администратор":
 
                 // ИЗОБРАЖЕНИЕ-----------------------------------------------------------
-//                ImageIcon imageIcon = new ImageIcon("Q:/Программирование/java/CourseW");
-//                JLabel label = new JLabel(imageIcon);
-//                label.setVisible(true);
-//                frame.getContentPane().add(label);
-//                label.setSize(100,100);
-//                label.setLocation(260,40);
-//                frame.add(new JLabel(imageIcon));
+
+                try {
+                    // Загрузка изображения
+                    BufferedImage originalImage = ImageIO.read(new File("Q:/Программирование/java/CourseW/Снимок экрана 2024-12-12 032529.png"));
+
+                    int newWidth = 200;
+                    int newHeight = 150;
+
+                    Image scaledImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+
+                    JFrame p = new JFrame("Масштабированное изображение");
+
+                    JLabel p1 = new JLabel(new ImageIcon(scaledImage));
+                    p1.setVisible(true);
+                    p1.setSize(150, 130);
+                    p1.setLocation(350, 2);
+                    panel.add(p1);
+                    panel.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 //// ИЗОБРАЖЕНИЕ-----------------------------------------------------------
 
                 JButton addGroupButton = new JButton("Добавить группу");
@@ -173,6 +219,7 @@ public class MainApp {
                     if (studentName != null && studentPassword != null) {
                         students.add(studentName);
                         UserManager.addUser(new User(studentName, studentPassword, "Студент"));
+
                         JOptionPane.showMessageDialog(frame, "Студент добавлен!");
                         saveData();
                     }
@@ -225,7 +272,7 @@ public class MainApp {
                         String subject = (String) JOptionPane.showInputDialog(
                                 frame,
                                 "Какую дисциплину удалить:",
-                                "!!!!!!!!!",
+                                "Удаление учебной дисциплины",
                                 JOptionPane.QUESTION_MESSAGE,
                                 null,
                                 sa,
@@ -237,30 +284,8 @@ public class MainApp {
                             JOptionPane.showMessageDialog(frame, "Дисциплина успешно удалена!");
                         }
                     }
-                    // УДАЛЕНИЕ ДИСЦИПЛИН--------------------------------------------------------------
-
-
-//                    String subject = JOptionPane.showInputDialog("Введите название дисциплины:");
-//                    if (subject != null) {
-//                        subjects.remove(subject);
-//                        JOptionPane.showMessageDialog(frame, "Дисциплина удалена!");
-//                        saveData();
-//                    }
                 });
-
-
-
-
-
-
-//                registerButton.addActionListener(e -> {
-//                    String username = JOptionPane.showInputDialog("Введите имя пользователя:");
-//
-//                    if (username != null) {
-//                        UserManager.addUser(new User(username));
-//                        JOptionPane.showMessageDialog(frame, "Пользователь успешно зарегистрирован!");
-//                    }
-//                });
+                // УДАЛЕНИЕ ДИСЦИПЛИН--------------------------------------------------------------
 
                 deleteUserButton.addActionListener(e -> {
                     deleteUser(frame);
@@ -268,29 +293,152 @@ public class MainApp {
                 });
                 break;
 
-
-
-
             case "Студент":
+
                 JButton takeExamButton = new JButton("Сдать экзамен");
-                panel.add(takeExamButton);
-                panel.add(logoutButton);
+                takeExamButton.setLayout(null);
+                takeExamButton.setSize(250,30);
+
+                JButton resultButton = new JButton("Посмотреть свою оценку");
+                resultButton.setLayout(null);
+                resultButton.setSize(250,30);
+
+                panel.setLayout(null);
+                panel.add(takeExamButton).setLocation(170,70);
+                panel.add(resultButton).setLocation(170,110);
+                panel.add(logoutButton).setLocation(170,150);
 
                 takeExamButton.addActionListener(e -> {
-                    takeExam(user);
+                    giveExam(user);
                     saveData();
+                });
+
+                resultButton.addActionListener(e -> {
+
+                    for (FullStudentGrades fullStudentGrades : arrFullStudentGrades){
+
+                        if(Objects.equals(fullStudentGrades.getNameStudent(), user.getUsername())){
+
+                            String result = fullStudentGrades.toString().replace("[", "").replace("]", "")
+                                    .replace(", ", "");
+
+                            if(deenGetResult && result.isEmpty() || result.isBlank()) {
+                                JOptionPane.showMessageDialog(frame, "У вас не сдан ни один экзамен!");
+                            }
+                            else if (!deenGetResult) {
+                                JOptionPane.showMessageDialog(frame, "Результаты еще не выложены!");
+                            }
+                            else JOptionPane.showMessageDialog(frame, result);
+
+                            break;
+                        }
+                    }
                 });
                 break;
 
             case "Преподаватель":
-                panel.add(new JLabel("Интерфейс для проведения экзамена."));
-                panel.add(logoutButton);
+
+                JButton takeExamButton1 = new JButton("Принять экзамен");
+                takeExamButton1.setLayout(null);
+                takeExamButton1.setSize(250,30);
+
+                panel.setLayout(null);
+                panel.add(takeExamButton1).setLocation(170,70);
+                panel.add(logoutButton).setLocation(170,110);
+
+
+//                takeExam.setLayout(null);
+//                takeExam.setSize(250, 30);
+//                panel.setLayout(null);
+//                panel.add(takeExam).setLocation(10, 20);
+
+                takeExamButton1.addActionListener(e -> {
+//                    takeExam(user);
+//                    saveData();
+
+                    String[] sa = new String[arrStringStudentToExam.size()];
+
+                    for(int i=0; i< arrStringStudentToExam.size(); i++){
+                        sa[i] = arrStringStudentToExam.get(i);
+                    }
+
+                    if(arrStringStudentToExam.isEmpty()){
+                        JOptionPane.showMessageDialog(frame, "Список допущенных студентов пуст!");
+
+                    } else {
+                        String students = (String) JOptionPane.showInputDialog(
+                                frame,
+                                "У какого студента принять экзамен:",
+                                "Допущенные студенты",
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                sa,
+                                sa[0]
+                        );
+                        //-------------
+
+                        String[] subjectArray = subjects.toArray(new String[0]);
+
+                        if (subjectArray.length == 0) {
+                            JOptionPane.showMessageDialog(null, "Нет доступных экзаменов!");
+                            return;
+                        }
+
+                        String selectedSubject = (String) JOptionPane.showInputDialog(
+                                null,
+                                "Выберите предмет для проверки:",
+                                "Сдача экзамена",
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                subjectArray,
+                                subjectArray[0]
+                        );
+
+                        //-------------
+
+                        String[] sas = new String[]{"1", "2", "3", "4", "5"};
+                        String gradest = (String) JOptionPane.showInputDialog(
+                                frame,
+                                "Какую оценку вы ставите за экзамен: ",
+                                "Оценка",
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                sas,
+                                sas[0]
+                        );
+                        JOptionPane.showMessageDialog(frame, "Оценка поставлена!");
+
+                        //---------------
+
+                        FullStudentGrades fullStudentGrades = new FullStudentGrades(gradest, students, selectedSubject);
+                        arrFullStudentGrades.add(fullStudentGrades);
+
+                        PrintWriter w1 = null;
+                        try {
+                            w1 = new PrintWriter(new FileWriter(arrFullFileStringStudentGrades.getFirst(), true));
+                            w1.println("Имя: " + fullStudentGrades.getNameStudent() + " Предмет: " + fullStudentGrades.getSubject()
+                            + " Оценка: " + fullStudentGrades.getGrades());
+                            w1.close();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+                        //---------------
+
+                        PrintWriter w2 = null;
+                        try {
+                            w2 = new PrintWriter(new FileWriter(arrFileStudentGrades.getFirst(), true));
+                            w2.println(gradest);
+                            w2.close();
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        arrStringStudentGrades.add(gradest);
+                    }
+                });
                 break;
 
             case "Заместитель директора":
-                JButton allowExamButton = new JButton("Допуск всех студентов к экзамену");
-                allowExamButton.setLayout(null);
-                allowExamButton.setSize(250,30);
 
                 JButton inputResultsButton = new JButton("Ввод результатов экзамена");
                 inputResultsButton.setLayout(null);
@@ -300,25 +448,33 @@ public class MainApp {
                 manageExamPermissionButton.setLayout(null);
                 manageExamPermissionButton.setSize(250,30);
 
-
                 panel.setLayout(null);
-                panel.add(manageExamPermissionButton).setLocation(170,20);
-                panel.add(allowExamButton).setLocation(170,60);
+                panel.add(manageExamPermissionButton).setLocation(170,60);
                 panel.add(inputResultsButton).setLocation(170,100);
                 panel.add(logoutButton).setLocation(170,180);
 
-                allowExamButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Все студенты допущены к экзамену!"));
-                inputResultsButton.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Результаты экзамена введены!"));
+                inputResultsButton.addActionListener(e -> {
+                    deenGetResult = true;
+                    JOptionPane.showMessageDialog(frame, "Результаты экзамена введены!");
+                });
 
-                manageExamPermissionButton.addActionListener(e -> manageExamPermissions(frame));
+                manageExamPermissionButton.addActionListener(e -> {
+                    try {
+                        manageExamPermissions(frame);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
                 break;
         }
-
         frame.add(panel);
         frame.setVisible(true);
     }
 
-    private static void manageExamPermissions(JFrame parentFrame) {
+    private static void manageExamPermissions(JFrame parentFrame) throws IOException {
+
+//        BufferedWriter writer = new BufferedWriter(new FileWriter("studentToExam.txt", true));
+
         if (students.isEmpty()) {
             JOptionPane.showMessageDialog(parentFrame, "Список студентов пуст!");
             return;
@@ -345,23 +501,32 @@ public class MainApp {
             );
 
             if (option == JOptionPane.YES_OPTION) {
+                PrintWriter w = new PrintWriter(new FileWriter(arrFileStudentToExam.getFirst(), true));
+                w.println(selectedStudent);
+                w.close();
+                arrStringStudentToExam.add(selectedStudent);
+
                 examResults.add(selectedStudent + " допущен к экзамену");
                 JOptionPane.showMessageDialog(parentFrame, "Студент " + selectedStudent + " допущен к экзамену!");
-            } else {
-                examResults.add(selectedStudent + " НЕ допущен к экзамену");
-                JOptionPane.showMessageDialog(parentFrame, "Студент " + selectedStudent + " НЕ допущен к экзамену!");
+            }
+            else {
+                examResults.add(selectedStudent + " не допущен к экзамену");
+                JOptionPane.showMessageDialog(parentFrame, "Студент " + selectedStudent + " идет исправлять долги!");
             }
             saveData();
         }
     }
 
     private static void addGroup() {
+
         String groupName = JOptionPane.showInputDialog("Введите название группы:");
+
         if (groupName != null && !groupName.isEmpty()) {
             groups.add(groupName);
             JOptionPane.showMessageDialog(null, "Группа добавлена!");
             saveData();
-        } else {
+        }
+        else {
             JOptionPane.showMessageDialog(null, "Название группы не может быть пустым!");
         }
     }
@@ -394,7 +559,7 @@ public class MainApp {
                     JOptionPane.QUESTION_MESSAGE,
                     null,
                     groups.toArray(),
-                    groups.get(0)
+                    groups.getFirst() //!!!!!!!!!!!!!!
             );
 
             if (group != null) {
@@ -403,36 +568,80 @@ public class MainApp {
             }
         }
     }
+    // СДАЧА ЭКЗАМЕНА СТУДЕНТ--------------------------------------------------------------
+    private static void giveExam(User student) {
 
-    private static void takeExam(User student) {
-        String[] subjectArray = subjects.toArray(new String[0]);
+        if(arrStringStudentToExam.contains(student.getUsername())) {
 
-        if (subjectArray.length == 0) {
-            JOptionPane.showMessageDialog(null, "Нет доступных экзаменов!");
-            return;
-        }
+            String[] subjectArray = subjects.toArray(new String[0]);
 
-        String selectedSubject = (String) JOptionPane.showInputDialog(
-                null,
-                "Выберите предмет:",
-                "Сдача экзамена",
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                subjectArray,
-                subjectArray[0]
-        );
-
-        if (selectedSubject != null) {
-            String grade = JOptionPane.showInputDialog("Введите оценку для экзамена " + selectedSubject + ":");
-            if (grade != null) {
-                examResults.add(student.getUsername() + " - " + selectedSubject + ": " + grade);
-                JOptionPane.showMessageDialog(null, "Экзамен успешно сдан!");
-                saveData();
+            if (subjectArray.length == 0) {
+                JOptionPane.showMessageDialog(null, "Нет доступных экзаменов!");
+                return;
             }
+
+            String selectedSubject = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Выберите предмет:",
+                    "Сдача экзамена",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    subjectArray,
+                    subjectArray[0]
+            );
+            JOptionPane.showMessageDialog(null, "Экзамен сдан, ждите результаты!");
+
         }
+        else {
+            JOptionPane.showMessageDialog(null, "Вы не допущены к экзамену!");
+        }
+//        if (selectedSubject != null) {
+//            String grade = JOptionPane.showInputDialog("Введите оценку для экзамена " + selectedSubject + ":");
+//            if (grade != null) {
+//                examResults.add(student.getUsername() + " - " + selectedSubject + ": " + grade);
+//                JOptionPane.showMessageDialog(null, "Экзамен успешно сдан!");
+//                saveData();
+//            }
+//        }
     }
 
-    private static void deleteUser(JFrame frame) {
+    // СДАЧА ЭКЗАМЕНА СТУДЕНТ--------------------------------------------------------------
+
+
+    // ПРИЕМ ЭКЗАМЕНА УЧИТЕЛЬ--------------------------------------------------------------
+
+    private static void takeExam(User student) {
+
+        if(arrStringStudentToExam.contains(student.getUsername())) {
+
+            String[] subjectArray = subjects.toArray(new String[0]);
+
+            if (subjectArray.length == 0) {
+                JOptionPane.showMessageDialog(null, "Нет доступных экзаменов!");
+                return;
+            }
+
+            String selectedSubject = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Выберите предмет:",
+                    "Сдача экзамена",
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    subjectArray,
+                    subjectArray[0]
+            );
+            JOptionPane.showMessageDialog(null, "Экзамен сдан, ждите результаты!");
+
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Вы не допущены к экзамену!");
+        }
+
+    }
+        // ПРИЕМ ЭКЗАМЕНА УЧИТЕЛЬ--------------------------------------------------------------
+
+        private static void deleteUser(JFrame frame) {
+
         List<User> users = UserManager.loadUsers();
         String[] userNames = users.stream().map(User::getUsername).toArray(String[]::new);
 
@@ -449,6 +658,10 @@ public class MainApp {
         if (selectedUser != null) {
             users.removeIf(user -> user.getUsername().equals(selectedUser));
             UserManager.saveUsers(users);
+            students.remove(selectedUser);
+            arrStringStudentToExam.remove(selectedUser);
+            dean.remove(selectedUser);
+            teachers.remove(selectedUser);
             JOptionPane.showMessageDialog(frame, "Пользователь удален!");
             saveData();
         }
