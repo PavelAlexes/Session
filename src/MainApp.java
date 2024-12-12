@@ -154,25 +154,50 @@ public class MainApp {
 
                     Image scaledImage = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
 
-                    JFrame p = new JFrame("Масштабированное изображение");
 
-                    JLabel p1 = new JLabel(new ImageIcon(scaledImage));
+
+                    JButton p1 = new JButton(new ImageIcon(scaledImage));
                     p1.setVisible(true);
                     p1.setSize(150, 130);
                     p1.setLocation(350, 2);
                     panel.add(p1);
                     panel.setVisible(true);
+
+                    p1.addActionListener(e -> {
+                        try {
+
+                            BufferedImage originalImage2 = ImageIO.read(new File("Q:/Программирование/java/CourseW/photo_2024-12-12_22-40-35.jpg"));
+                            int newWidth2 = 400;
+                            int newHeight2 = 300;
+
+                            Image scaledImage2 = originalImage2.getScaledInstance(newWidth2, newHeight2, Image.SCALE_SMOOTH);
+
+                            JFrame p2 = new JFrame("Масштабированное изображение");
+
+                            JButton p3 = new JButton(new ImageIcon(scaledImage2));
+                            p3.setVisible(true);
+                            p3.setSize(250, 250);
+                            p3.setLocation(280, 2);
+                            panel.add(p3);
+                            panel.setVisible(true);
+
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
                 //// ИЗОБРАЖЕНИЕ-----------------------------------------------------------
 
-                JButton addGroupButton = new JButton("Добавить группу");
-                addGroupButton.setLayout(null);
-                addGroupButton.setSize(250,30);
+//                JButton addGroupButton = new JButton("Добавить группу");
+//                addGroupButton.setLayout(null);
+//                addGroupButton.setSize(250,30);
 
-                JButton assignStudentToGroupButton = new JButton("Распределить студента по группе");
+//                JButton assignStudentToGroupButton = new JButton("Распределить студента по группе");
 
                 JButton addStudentButton = new JButton("Добавить студента");
                 addStudentButton.setLayout(null);
@@ -199,10 +224,10 @@ public class MainApp {
                 deleteSubjectButton.setSize(250,30);
 
                 panel.setLayout(null);
-                panel.add(addGroupButton).setLocation(10,20);
-                panel.add(assignStudentToGroupButton);
-                panel.add(addStudentButton).setLocation(10,60);
-                panel.add(addTeacherButton).setLocation(10,100);
+//                panel.add(addGroupButton).setLocation(10,20);
+//                panel.add(assignStudentToGroupButton);
+                panel.add(addStudentButton).setLocation(10,40);
+                panel.add(addTeacherButton).setLocation(10,80);
                 panel.add(addDeanButton).setLocation(10,140);
                 panel.add(addSubjectButton).setLocation(10,180);
                 panel.add(deleteUserButton).setLocation(300,140);
@@ -210,8 +235,8 @@ public class MainApp {
                 panel.add(logoutButton).setLocation(150,220);
 
 
-                addGroupButton.addActionListener(e -> addGroup());
-                assignStudentToGroupButton.addActionListener(e -> assignStudentToGroup());
+//                addGroupButton.addActionListener(e -> addGroup());
+//                assignStudentToGroupButton.addActionListener(e -> assignStudentToGroup());
 
                 addStudentButton.addActionListener(e -> {
                     String studentName = JOptionPane.showInputDialog("Введите имя студента:");
@@ -666,6 +691,8 @@ public class MainApp {
             saveData();
         }
     }
+
+
 
 //    private static void deleteSubject(JFrame frame) {
 //        List<Subject> subjects = SubjectManager.loadSubject();
