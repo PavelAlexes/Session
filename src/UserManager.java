@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserManager {
+
     private static final String FILE_NAME = "users.txt";
 
     public static List<User> loadUsers() {
