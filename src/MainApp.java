@@ -67,12 +67,6 @@ public class MainApp {
 
             frame.add(panel);
             frame.setVisible(true);
-            Icon icon = new ImageIcon("Снимок экрана 2024-12-17 184559.png");
-
-            Image image = ((ImageIcon) icon).getImage(); // transform it
-            Image newimg = image.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-            icon = new ImageIcon(newimg);  // transform it back
-            Icon finalIcon = icon;
 
             loginButton.addActionListener(e -> {
                 String username = loginField.getText();
@@ -83,31 +77,23 @@ public class MainApp {
                     frame.dispose();
                     openRoleInterface(user);
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Я люблю только Полинку ВАЩЕ!#41!!@ ","♥",JOptionPane.QUESTION_MESSAGE,finalIcon);
+                    JOptionPane.showMessageDialog(frame, "Неверный логин или пароль!");
                 }
             });
 
-
-
-
-
-
-
-
             registerButton.addActionListener(e -> {
-                String username = JOptionPane.showInputDialog("Самый хайповый подросток:");
+                String username = JOptionPane.showInputDialog("Введите имя пользователя:");
                 String password = JOptionPane.showInputDialog("Введите пароль:");
-                String[] roles = {"да", "АААаАаа памагити"};
+                String[] roles = {"Администратор", "Студент", "Преподаватель", "Заместитель директора"};
                 String role = (String) JOptionPane.showInputDialog(
                         frame,
-                        "тебя уебать пидарас?!2",
-                        "Message",
+                        "Выберите роль:",
+                        "Регистрация",
                         JOptionPane.QUESTION_MESSAGE,
-                        finalIcon,
+                        null,
                         roles,
                         roles[0]
                 );
-
 
                 if (username != null && password != null && role != null) {
 
@@ -126,7 +112,6 @@ public class MainApp {
             });
         });
     }
-
     private static void openRoleInterface(User user) {
 
         JFrame frame = new JFrame("Интерфейс " + user.getRole());
@@ -161,7 +146,7 @@ public class MainApp {
 
                 try {
                     // Загрузка изображения
-                    BufferedImage originalImage = ImageIO.read(new File("C:/ОСНОВНАЯ/Программирование/courseWorkV2/Снимок экрана 2024-12-12 032529.png"));
+                    BufferedImage originalImage = ImageIO.read(new File("Q:/Программирование/java/CourseW/Снимок экрана 2024-12-12 032529.png"));
 
                     int newWidth = 200;
                     int newHeight = 150;
@@ -172,35 +157,35 @@ public class MainApp {
 
                     JButton p1 = new JButton(new ImageIcon(scaledImage));
                     p1.setVisible(true);
-                    p1.setSize(200, 140);
-                    p1.setLocation(330, 16);
+                    p1.setSize(150, 130);
+                    p1.setLocation(350, 2);
                     panel.add(p1);
                     panel.setVisible(true);
 
-//                    p1.addActionListener(e -> {
-//                        try {
-//
-//                            BufferedImage originalImage2 = ImageIO.read(new File("Q:/Программирование/java/CourseW/photo_2024-12-12_22-40-35.jpg"));
-//                            int newWidth2 = 400;
-//                            int newHeight2 = 300;
-//
-//                            Image scaledImage2 = originalImage2.getScaledInstance(newWidth2, newHeight2, Image.SCALE_SMOOTH);
-//
-//                            JFrame p2 = new JFrame("Масштабированное изображение");
-//
-//                            JButton p3 = new JButton(new ImageIcon(scaledImage2));
-//                            p3.setVisible(true);
-//                            p3.setSize(250, 250);
-//                            p3.setLocation(280, 2);
-//                            panel.add(p3);
-//                            panel.setVisible(true);
-//
-//                        } catch (IOException ex) {
-//                            throw new RuntimeException(ex);
-//                        }
-//
-//
-//                    });
+                    p1.addActionListener(e -> {
+                        try {
+
+                            BufferedImage originalImage2 = ImageIO.read(new File("Q:/Программирование/java/CourseW/photo_2024-12-12_22-40-35.jpg"));
+                            int newWidth2 = 400;
+                            int newHeight2 = 300;
+
+                            Image scaledImage2 = originalImage2.getScaledInstance(newWidth2, newHeight2, Image.SCALE_SMOOTH);
+
+                            JFrame p2 = new JFrame("Масштабированное изображение");
+
+                            JButton p3 = new JButton(new ImageIcon(scaledImage2));
+                            p3.setVisible(true);
+                            p3.setSize(250, 250);
+                            p3.setLocation(280, 2);
+                            panel.add(p3);
+                            panel.setVisible(true);
+
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+
+
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -213,18 +198,6 @@ public class MainApp {
 
 //                JButton assignStudentToGroupButton = new JButton("Распределить студента по группе");
 
-                JButton addUserStudentButton = new JButton("Составить список студентов");
-                addUserStudentButton.setLayout(null);
-                addUserStudentButton.setSize(250,30);
-
-                JButton arrayTeacherButton = new JButton("Составить список преподавателей");
-                arrayTeacherButton.setLayout(null);
-                arrayTeacherButton.setSize(250,30);
-
-                JButton arraySubjectButton = new JButton("Составить список дисциплин");
-                arraySubjectButton.setLayout(null);
-                arraySubjectButton.setSize(250,30);
-
                 JButton addStudentButton = new JButton("Добавить студента");
                 addStudentButton.setLayout(null);
                 addStudentButton.setSize(250,30);
@@ -233,9 +206,9 @@ public class MainApp {
                 addTeacherButton.setLayout(null);
                 addTeacherButton.setSize(250,30);
 
-//                JButton addDeanButton = new JButton("Добавить Заместителя директора");
-//                addDeanButton.setLayout(null);
-//                addDeanButton.setSize(250,30);
+                JButton addDeanButton = new JButton("Добавить Заместителя директора");
+                addDeanButton.setLayout(null);
+                addDeanButton.setSize(250,30);
 
                 JButton addSubjectButton = new JButton("Добавить дисциплину");
                 addSubjectButton.setLayout(null);
@@ -245,25 +218,24 @@ public class MainApp {
                 deleteUserButton.setLayout(null);
                 deleteUserButton.setSize(250,30);
 
-//                JButton deleteSubjectButton = new JButton("Удалить дисциплину");
-//                deleteSubjectButton.setLayout(null);
-//                deleteSubjectButton.setSize(250,30);
+                JButton deleteSubjectButton = new JButton("Удалить дисциплину");
+                deleteSubjectButton.setLayout(null);
+                deleteSubjectButton.setSize(250,30);
 
                 panel.setLayout(null);
-
-//                panel.add(addStudentButton).setLocation(10,40);
-//                panel.add(addTeacherButton).setLocation(10,80);
-                panel.add(addUserStudentButton).setLocation(10,40);
-                panel.add(arrayTeacherButton).setLocation(10, 80);
-                panel.add(arraySubjectButton).setLocation(10, 120);
-//                panel.add(addDeanButton).setLocation(10,140);
-//                panel.add(addSubjectButton).setLocation(10,180);
-//                panel.add(deleteUserButton).setLocation(300,140);
-//                panel.add(deleteSubjectButton).setLocation(300,180);
-                panel.add(logoutButton).setLocation(150,180);
+//                panel.add(addGroupButton).setLocation(10,20);
+//                panel.add(assignStudentToGroupButton);
+                panel.add(addStudentButton).setLocation(10,40);
+                panel.add(addTeacherButton).setLocation(10,80);
+                panel.add(addDeanButton).setLocation(10,140);
+                panel.add(addSubjectButton).setLocation(10,180);
+                panel.add(deleteUserButton).setLocation(300,140);
+                panel.add(deleteSubjectButton).setLocation(300,180);
+                panel.add(logoutButton).setLocation(150,220);
 
 
-
+//                addGroupButton.addActionListener(e -> addGroup());
+//                assignStudentToGroupButton.addActionListener(e -> assignStudentToGroup());
 
                 addStudentButton.addActionListener(e -> {
                     String studentName = JOptionPane.showInputDialog("Введите имя студента:");
@@ -276,248 +248,17 @@ public class MainApp {
                         saveData();
                     }
                 });
-//-----------------------------------------------------------------------------------
-                addUserStudentButton.addActionListener(e -> {
 
-                    JFrame frame1 = new JFrame("Интерфейс");
-
-                    frame1.setLocation(600,250);
-                    frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    frame1.setSize(600, 300);
-                    frame1.setVisible(true);
-
-                    frame1.addWindowListener(new java.awt.event.WindowAdapter() {
-                        @Override
-                        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                            saveData();
-                        }
-                    });
-
-                    JPanel panel1 = new JPanel();
-                    panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-
-                    JButton logoutButton1 = new JButton("Выйти");
-                    logoutButton1.setLayout(null);
-                    logoutButton1.setSize(250,30);
-                    logoutButton1.setVisible(true);
-
-                    logoutButton1.addActionListener(e1 -> {
-                        frame1.dispose();
-                    });
-
-
-                    frame1.add(panel1);
-
-
-//.
-
-                    JButton addStudentButton1 = new JButton("Добавить студента");
-                    addStudentButton1.setLayout(null);
-                    addStudentButton1.setSize(250,30);
-
-                    JButton deleteUserButton1 = new JButton("Удалить студента");
-                    deleteUserButton1.setLayout(null);
-                    deleteUserButton1.setSize(250,30);
-
-                    panel1.setLayout(null);
-                    panel1.add(addStudentButton).setLocation(150,40);
-                    panel1.add(deleteUserButton).setLocation(150,80);
-                    panel1.add(logoutButton1).setLocation(150,120);
-
-                    addStudentButton.addActionListener(ex -> {
-//                        String studentName = JOptionPane.showInputDialog("Введите имя студента:");
-//                        String studentPassword = JOptionPane.showInputDialog("Введите пароль студента:");
-//                        if (studentName != null && studentPassword != null) {
-//                            students.add(studentName);
-//                            UserManager.addUser(new User(studentName, studentPassword, "Студент"));
-//
-//                            JOptionPane.showMessageDialog(frame1, "Студент добавлен!");
-//                            saveData();
-//                        }
-                    });
-
-//                    deleteUserButton.addActionListener(ex -> {
-//                        deleteUser(frame);
-//                        saveData();
-//                    });
-                });
-                //---------------------------------------------------
-
-                arrayTeacherButton.addActionListener(e -> {
-
-                    JFrame frame1 = new JFrame("Интерфейс");
-
-                    frame1.setLocation(600,250);
-                    frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    frame1.setSize(600, 300);
-                    frame1.setVisible(true);
-
-                    frame1.addWindowListener(new java.awt.event.WindowAdapter() {
-                        @Override
-                        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                            saveData();
-                        }
-                    });
-
-                    JPanel panel1 = new JPanel();
-                    panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-
-                    JButton logoutButton1 = new JButton("Выйти");
-                    logoutButton1.setLayout(null);
-                    logoutButton1.setSize(250,30);
-                    logoutButton1.setVisible(true);
-
-                    logoutButton1.addActionListener(e1 -> {
-                        frame1.dispose();
-                    });
-
-
-                    frame1.add(panel1);
-
-
-//.
-
-                    JButton addTeacherButton1 = new JButton("Добавить преподавателя");
-                    addTeacherButton1.setLayout(null);
-                    addTeacherButton1.setSize(250,30);
-
-                    JButton deleteUserButton1 = new JButton("Удалить преподавателя");
-                    deleteUserButton1.setLayout(null);
-                    deleteUserButton1.setSize(250,30);
-
-                    panel1.setLayout(null);
-                    panel1.add(addTeacherButton1).setLocation(150,40);
-                    panel1.add(deleteUserButton1).setLocation(150,80);
-                    panel1.add(logoutButton1).setLocation(150,120);
-
-                    addTeacherButton1.addActionListener(ex -> {
-                        String teacher = JOptionPane.showInputDialog("Введите имя преподавателя:");
-                        String teacherPassword = JOptionPane.showInputDialog("Введите пароль преподавателя:");
-                        if (teacher != null && teacherPassword != null) {
-                            teachers.add(teacher);
-                            UserManager.addUser(new User(teacher, teacherPassword, "Преподаватель"));
-                            JOptionPane.showMessageDialog(frame, "Преподаватель добавлен!");
-                            saveData();
-                        }
-                    });
-
-                    deleteUserButton1.addActionListener(ex -> {
-                        deleteUser(frame);
+                addDeanButton.addActionListener(e -> {
+                    String deanName = JOptionPane.showInputDialog("Введите имя Заместителя директора:");
+                    String deanPassword = JOptionPane.showInputDialog("Введите пароль Заместителя директора:");
+                    if (deanName != null && deanPassword != null) {
+                        dean.add(deanName);
+                        UserManager.addUser(new User(deanName, deanPassword, "Заместитель директора"));
+                        JOptionPane.showMessageDialog(frame, "Заместитель директора добавлен!");
                         saveData();
-                    });
-
-//.
-                    //-------------------------------------------------------
-
-
-
-                    //---------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-//                    String deanName = JOptionPane.showInputDialog("Введите имя Заместителя директора:");
-//                    String deanPassword = JOptionPane.showInputDialog("Введите пароль Заместителя директора:");
-//                    if (deanName != null && deanPassword != null) {
-//                        dean.add(deanName);
-//                        UserManager.addUser(new User(deanName, deanPassword, "Заместитель директора"));
-//                        JOptionPane.showMessageDialog(frame, "Заместитель директора добавлен!");
-//                        saveData();
-//                    }
+                    }
                 });
-
-                arraySubjectButton.addActionListener(e -> {
-
-                    JFrame frame1 = new JFrame("Интерфейс");
-
-                    frame1.setLocation(600,250);
-                    frame1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    frame1.setSize(600, 300);
-                    frame1.setVisible(true);
-
-                    frame1.addWindowListener(new java.awt.event.WindowAdapter() {
-                        @Override
-                        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                            saveData();
-                        }
-                    });
-
-                    JPanel panel1 = new JPanel();
-                    panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-
-                    JButton logoutButton1 = new JButton("Выйти");
-                    logoutButton1.setLayout(null);
-                    logoutButton1.setSize(250,30);
-                    logoutButton1.setVisible(true);
-
-                    logoutButton1.addActionListener(e1 -> {
-                        frame1.dispose();
-                    });
-
-
-                    frame1.add(panel1);
-
-
-//.
-
-                    JButton addSubjectButton1 = new JButton("Добавить дисциплину");
-                    addSubjectButton1.setLayout(null);
-                    addSubjectButton1.setSize(250,30);
-
-                    JButton deleteSubjectButton = new JButton("Удалить дисциплину");
-                    deleteSubjectButton.setLayout(null);
-                    deleteSubjectButton.setSize(250,30);
-
-                    panel1.setLayout(null);
-                    panel1.add(addSubjectButton1).setLocation(150,40);
-                    panel1.add(deleteSubjectButton).setLocation(150,80);
-                    panel1.add(logoutButton1).setLocation(150,120);
-
-                    addSubjectButton1.addActionListener(ex -> {
-                        String subject = JOptionPane.showInputDialog("Введите название дисциплины:");
-                        if (subject != null) {
-                            subjects.add(subject);
-                            JOptionPane.showMessageDialog(frame, "Дисциплина добавлена!");
-                            saveData();
-                        }
-                    });
-
-                    deleteSubjectButton.addActionListener(ex -> {
-
-                        String[] sa = new String[subjects.size()];
-
-                        for(int i=0; i< subjects.size(); i++){
-                            sa[i] = subjects.get(i);
-                        }
-
-                        if(subjects.isEmpty()){
-                            JOptionPane.showMessageDialog(frame, "Список дисциплин пуст!");
-
-                        } else {
-                            String subject = (String) JOptionPane.showInputDialog(
-                                    frame,
-                                    "Какую дисциплину удалить:",
-                                    "Удаление учебной дисциплины",
-                                    JOptionPane.QUESTION_MESSAGE,
-                                    null,
-                                    sa,
-                                    sa[0]
-                            );
-
-                            if (subject != null) {
-                                subjects.remove(subject);
-                                JOptionPane.showMessageDialog(frame, "Дисциплина успешно удалена!");
-                            }
-                        }
-                    });
-                });
-                //---------------------------------------------------
 
                 addTeacherButton.addActionListener(e -> {
                     String teacher = JOptionPane.showInputDialog("Введите имя преподавателя:");
@@ -540,34 +281,34 @@ public class MainApp {
                 });
 
                 // УДАЛЕНИЕ ДИСЦИПЛИН--------------------------------------------------------------
-//                deleteSubjectButton.addActionListener(e -> {
-//
-//                    String[] sa = new String[subjects.size()];
-//
-//                    for(int i=0; i< subjects.size(); i++){
-//                        sa[i] = subjects.get(i);
-//                    }
-//
-//                    if(subjects.isEmpty()){
-//                        JOptionPane.showMessageDialog(frame, "Список дисциплин пуст!");
-//
-//                    } else {
-//                        String subject = (String) JOptionPane.showInputDialog(
-//                                frame,
-//                                "Какую дисциплину удалить:",
-//                                "Удаление учебной дисциплины",
-//                                JOptionPane.QUESTION_MESSAGE,
-//                                null,
-//                                sa,
-//                                sa[0]
-//                        );
-//
-//                        if (subject != null) {
-//                            subjects.remove(subject);
-//                            JOptionPane.showMessageDialog(frame, "Дисциплина успешно удалена!");
-//                        }
-//                    }
-//                });
+                deleteSubjectButton.addActionListener(e -> {
+
+                    String[] sa = new String[subjects.size()];
+
+                    for(int i=0; i< subjects.size(); i++){
+                        sa[i] = subjects.get(i);
+                    }
+
+                    if(subjects.isEmpty()){
+                        JOptionPane.showMessageDialog(frame, "Список дисциплин пуст!");
+
+                    } else {
+                        String subject = (String) JOptionPane.showInputDialog(
+                                frame,
+                                "Какую дисциплину удалить:",
+                                "Удаление учебной дисциплины",
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                sa,
+                                sa[0]
+                        );
+
+                        if (subject != null) {
+                            subjects.remove(subject);
+                            JOptionPane.showMessageDialog(frame, "Дисциплина успешно удалена!");
+                        }
+                    }
+                });
                 // УДАЛЕНИЕ ДИСЦИПЛИН--------------------------------------------------------------
 
                 deleteUserButton.addActionListener(e -> {
@@ -598,26 +339,24 @@ public class MainApp {
 
                 resultButton.addActionListener(e -> {
 
-                    if (!deenGetResult) {
-                        JOptionPane.showMessageDialog(frame, "Вы не сдали ни одного экзамена!");
-                    } else if (deenGetResult) {
-                        for (FullStudentGrades fullStudentGrades : arrFullStudentGrades){
-                            if(!Objects.equals(fullStudentGrades.getNameStudent(), user.getUsername())){
-                                JOptionPane.showMessageDialog(frame, "result");
-                            }else{
-                                String result = fullStudentGrades.toString().replace("[", "").replace("]", "")
-                                        .replace(", ", "");
-                                JOptionPane.showMessageDialog(frame, result);
-                                break;
-                            }
+                    for (FullStudentGrades fullStudentGrades : arrFullStudentGrades){
 
-//                            if(Objects.equals(fullStudentGrades.getNameStudent(), user.getUsername())){
-//
-//                            }
+                        if(Objects.equals(fullStudentGrades.getNameStudent(), user.getUsername())){
+
+                            String result = fullStudentGrades.toString().replace("[", "").replace("]", "")
+                                    .replace(", ", "");
+
+                            if(deenGetResult && result.isEmpty() || result.isBlank()) {
+                                JOptionPane.showMessageDialog(frame, "У вас не сдан ни один экзамен!");
+                            }
+                            else if (!deenGetResult) {
+                                JOptionPane.showMessageDialog(frame, "Результаты еще не выложены!");
+                            }
+                            else JOptionPane.showMessageDialog(frame, result);
+
+                            break;
                         }
                     }
-
-
                 });
                 break;
 
