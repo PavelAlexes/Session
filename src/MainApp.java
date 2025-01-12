@@ -67,6 +67,12 @@ public class MainApp {
 
             frame.add(panel);
             frame.setVisible(true);
+            Icon icon = new ImageIcon("Снимок экрана 2024-12-17 184559.png");
+
+            Image image = ((ImageIcon) icon).getImage(); // transform it
+            Image newimg = image.getScaledInstance(120, 120,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+            icon = new ImageIcon(newimg);  // transform it back
+            Icon finalIcon = icon;
 
             loginButton.addActionListener(e -> {
                 String username = loginField.getText();
@@ -77,23 +83,31 @@ public class MainApp {
                     frame.dispose();
                     openRoleInterface(user);
                 } else {
-                    JOptionPane.showMessageDialog(frame, "Неверный логин или пароль!");
+                    JOptionPane.showMessageDialog(frame, "Я люблю только Полинку ВАЩЕ!#41!!@ ","♥",JOptionPane.QUESTION_MESSAGE,finalIcon);
                 }
             });
 
+
+
+
+
+
+
+
             registerButton.addActionListener(e -> {
-                String username = JOptionPane.showInputDialog("Введите имя пользователя:");
+                String username = JOptionPane.showInputDialog("Самый хайповый подросток:");
                 String password = JOptionPane.showInputDialog("Введите пароль:");
-                String[] roles = {"Администратор", "Студент", "Преподаватель", "Заместитель директора"};
+                String[] roles = {"да", "АААаАаа памагити"};
                 String role = (String) JOptionPane.showInputDialog(
                         frame,
-                        "Выберите роль:",
-                        "Регистрация",
+                        "тебя уебать пидарас?!2",
+                        "Message",
                         JOptionPane.QUESTION_MESSAGE,
-                        null,
+                        finalIcon,
                         roles,
                         roles[0]
                 );
+
 
                 if (username != null && password != null && role != null) {
 
